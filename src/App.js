@@ -9,7 +9,6 @@ function App() {
         <p>
           Edit <code>src/App.js</code>
         </p>
-        <br/>
         <p>
           Hey Anirudh, Sailekha, Hima, Anu, and Oluwadamilare!
         </p>
