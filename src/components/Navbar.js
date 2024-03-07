@@ -39,12 +39,7 @@ function Navbar() {
                         </li>
                         <li className='nav-item'>
                             <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                               Lorem 
-                            </Link>
-                        </li>
-                        <li className='nav-item'>
-                            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                               Ipsum 
+                               About
                             </Link>
                         </li>
                     </ul>
