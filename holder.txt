@@ -1,0 +1,48 @@
+<div className='Upload'>
+        <input type="file" id="pdfInput" accept=".pdf" onchange="displayPDF()"/>
+        <div id="pdfViewer"></div>
+        {function displayPDF() {
+            // Get the input element
+            var pdfInput = document.getElementById('pdfInput');
+
+            // Get the viewer div element
+            var pdfViewer = document.getElementById('pdfViewer');
+
+            // Check if a file is selected
+            if (pdfInput.files.length > 0) {
+                // Get the selected file
+                var pdfFile = pdfInput.files[0];
+
+                // Check if the selected file is a PDF
+                if (pdfFile.type === 'application/pdf') {
+                    // Create a FileReader to read the PDF file
+                    var reader = new FileReader();
+
+                    // Read the file as a Data URL
+                    reader.readAsDataURL(pdfFile);
+
+                    // Set the onload function to display the PDF
+                    reader.onload = function (e) {
+                        var pdfDataUrl = e.target.result;
+
+                        // Create an iframe to display the PDF
+                        var iframe = document.createElement('iframe');
+                        iframe.src = pdfDataUrl;
+                        iframe.width = '100%';
+                        iframe.height = '750px';
+
+                        // Clear previous content in the viewer
+                        pdfViewer.innerHTML = '';
+
+                        // Append the iframe to the viewer
+                        pdfViewer.appendChild(iframe);
+                    };
+                } else {
+                    alert('Please select a valid PDF file.');
+                }
+            } else {
+                alert('Please select a PDF file.');
+            }
+          }
+        }
+      </div>
