@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ImageTile from './ImageTile';
 import SearchBar from './SearchBar'; // Import the SearchBar component
 import './HomePage.css';
+import './SearchBar.css'
 
 import Mountain1 from './components/Mountain1.jpeg';
 import Mountain2 from './components/Mountain2.jpeg';
@@ -35,8 +36,10 @@ const HomePage = () => {
   return (
     <div className="homepage">
       {/* Render the SearchBar component */}
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      
+      <div className="search-bar-wrapper-homepage">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </div>
+
       <div className="image-tiles-wrapper">
         {filteredImageTiles.map((imageTileData, index) => (
           <ImageTile key={index} title={imageTileData.title} imageUrl={imageTileData.imageUrl} />

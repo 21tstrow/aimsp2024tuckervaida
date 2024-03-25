@@ -1,0 +1,42 @@
+.search-bar-wrapper {
+  padding-left: 25px;
+}
+
+.search-bar {
+  position: fixed; /* Position the search bar fixed relative to the viewport */
+  top: 0; /* Position it at the top of the viewport */
+  left: 275px; /* Align it to the left edge of the viewport */
+  width: 95%; /* Take up 100% of the viewport width */
+  z-index: 999; /* Ensure it appears above other content */
+  padding: 10px; /* Add padding for better visual appearance */
+  background-color: #ffffff; /* Background color */
+  box-sizing: border-box;
+}
+
+.search-input {
+  width: calc(100% - 375px); /* Adjust the input width as needed */
+  padding: 8px; /* Add padding */
+  border: 1px solid #ccc; /* Border */
+  border-radius: 10px; /* Border radius */
+  font-size: 16px; /* Font size */
+}
+  
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
