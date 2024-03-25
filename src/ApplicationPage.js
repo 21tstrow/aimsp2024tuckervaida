@@ -1,16 +1,13 @@
+// ApplicationPage.js
 import React from 'react';
+import PdfViewer from './PdfViewer.js'; // Adjust the import path if necessary
 
-function ApplicationPage() {
-  const handleClick = () => {
-    alert('Button clicked!');
-  };
-
+const ApplicationPage = () => {
   return (
-    <div className="application-page">
-      <h1>Application Page</h1>
-      <button onClick={handleClick}>Click Me</button>
+    <div>
+      <PdfViewer />
     </div>
   );
-}
+};
 
 export default ApplicationPage;
