@@ -39,3 +39,14 @@
     color: #fff;
     font-size: 100px;
   }
+.container {
+    display: flex;
+  }
+  
+  .navbar {
+    flex: 0 0 auto; /* Allow the navbar to shrink and grow based on its content */
+  }
+  
+  .main-content {
+    flex: 1 1 auto; /* Allow the main content to grow to fill the remaining space */
+  }
