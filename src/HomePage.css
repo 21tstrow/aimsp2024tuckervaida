@@ -1,0 +1,5 @@
+.image-tiles-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Adjust as needed */
+  }

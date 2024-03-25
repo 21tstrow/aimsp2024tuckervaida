@@ -1,25 +1,28 @@
-// HomePage.js
-
 import React from 'react';
 import ImageTile from './ImageTile';
+import './HomePage.css'
 
-
-// Import your 16 images
 import Mountain1 from './components/Mountain1.jpeg';
 import Mountain2 from './components/Mountain2.jpeg';
 import Mountain3 from './components/Mountain3.jpeg';
-// Repeat this for image4 through image16
 
 const HomePage = () => {
-  // Array containing paths to the images
-  const images = [Mountain1, Mountain2, Mountain3 /* Add image4 through image16 here */];
+  // Assuming you have an array of image data with titles and URLs
+  const imageTilesData = [
+    { title: 'Title1', imageUrl: Mountain1 },
+    { title: 'Title2', imageUrl: Mountain2 },
+    { title: 'Title3', imageUrl: Mountain3 },
+    { title: 'Title4', imageUrl: Mountain1 },
+    { title: 'Title5', imageUrl: Mountain2 },
+    { title: 'Title6', imageUrl: Mountain3 },
+    // Add more image data as needed
+  ];
 
   return (
-    <div>
-      <h1>Homepage</h1>
-      <div className="image-tiles">
-        {images.map((src, index) => (
-          <ImageTile key={index} src={src} />
+    <div className="homepage">
+      <div className="image-tiles-wrapper">
+        {imageTilesData.map((imageTileData, index) => (
+          <ImageTile key={index} title={imageTileData.title} imageUrl={imageTileData.imageUrl} />
         ))}
       </div>
     </div>
