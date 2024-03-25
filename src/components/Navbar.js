@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import {Button} from './Button';
@@ -21,6 +21,10 @@ function Navbar() {
         }
     }
 
+    useEffect(() => {
+        showButton()
+    }, []);
+
     // Hook to listen for window resize events and adjust button visibility accordingly
     window.addEventListener('resize', showButton);
 
@@ -30,7 +34,7 @@ function Navbar() {
             <nav className="navbar">
                 <div className="navbar-container">
                     {/* Logo */}
-                    <Link to="/" className="navbar-logo">
+                    <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
                         Analyze.Ai
                     </Link>
                     {/* Menu icon for mobile view */}
