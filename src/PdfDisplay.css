@@ -1,0 +1,38 @@
+.pdf-display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    height: 100vh;
+    overflow: auto; /* Add scrollbars if content overflows */
+  }
+  
+  .pdf-display {
+    max-width: 50%; /* Ensure the PDF display doesn't overflow its container */
+  }
+  
+  .pdf-display p {
+    margin-top: 10px; /* Add some spacing between the PDF display and other elements */
+  }
+  
+  .selected-text {
+    margin-top: 20px; /* Add spacing between the PDF display and the selected text */
+  }
+  
+  /* Adjustments for smaller screens */
+  @media screen and (max-width: 768px) {
+    .pdf-display-container {
+      padding: 0; /* Reduce padding for smaller screens */
+    }
+  }
+
+  .pdf-document {
+    background-color: #f2f2f2; /* Set background color for the document */
+    max-width: 50vw; /* Set width of the document */
+    max-height: 50vh;
+  }
+  
+  .pdf-page {
+    background-color: white; /* Set background color for each page */
+    width: 50vw; /* Set width of each page to fill the available space */
+    max-height: 200vh    
+}
