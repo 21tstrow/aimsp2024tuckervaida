@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PdfUpload from './PdfUpload';
 import PdfDisplay from './PdfDisplay';
-import PdfResizer from './PdfResizer'; // Import PdfResizer component
+import PdfResizer from './PdfResizer';
 import './ApplicationPage.css';
 
 function ApplicationPage() {
@@ -22,10 +22,11 @@ function ApplicationPage() {
   };
 
   const handleApiSubmit = () => {
-    // Handle API connection here
-    // You can use the 'textInput' state to send data to the API
-    // For now, let's just log the input
     console.log(textInput);
+  };
+
+  const handleTextSelect = (selectedText) => {
+    setTextInput(selectedText); // Update input value with selected text
   };
 
   return (
@@ -38,7 +39,7 @@ function ApplicationPage() {
         <div className="pdf-display-section">
           <h2>PDF Display</h2>
           <PdfResizer file={file} onPdfResized={handlePdfResized} />
-          <PdfDisplay file={resizedFile || file} /> {/* Render the resized PDF if available, otherwise render the original PDF */}
+          <PdfDisplay file={resizedFile || file} onTextSelect={handleTextSelect} />
         </div>
       </div>
       <div className="api-section">

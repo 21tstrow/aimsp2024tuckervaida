@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import './PdfDisplay.css'; // Import your CSS file
+import './PdfDisplay.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
-function PdfDisplay({ file }) {
+function PdfDisplay({ file, onTextSelect }) {
   const [numPages, setNumPages] = useState(null);
   const [selectedText, setSelectedText] = useState('');
 
@@ -17,7 +17,11 @@ function PdfDisplay({ file }) {
   useEffect(() => {
     const handleTextSelection = () => {
       const selection = window.getSelection();
-      setSelectedText(selection.toString());
+      const text = selection.toString();
+      setSelectedText(text);
+      // Pass selected text to parent component
+      onTextSelect(text);
+      console.log("Selected Text:", text); // Log the selected text
     };
 
     window.addEventListener('mouseup', handleTextSelection);
@@ -25,7 +29,7 @@ function PdfDisplay({ file }) {
     return () => {
       window.removeEventListener('mouseup', handleTextSelection);
     };
-  }, []);
+  }, [onTextSelect]);
 
   return (
     <div className='return-wrapper'>
@@ -38,20 +42,20 @@ function PdfDisplay({ file }) {
           </div>
         )}
       </div>
-    <div className="pdf-display-container">
+      <div className="pdf-display-container">
         {file && (
           <Document
             file={file}
             onLoadSuccess={onDocumentLoadSuccess}
             renderMode="svg"
             noData={true}
-            className="pdf-document" // Apply document class
+            className="pdf-document"
           >
             {Array.from(new Array(numPages), (el, index) => (
               <Page
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
-                className="pdf-page" // Apply page class
+                className="pdf-page"
               />
             ))}
           </Document>
