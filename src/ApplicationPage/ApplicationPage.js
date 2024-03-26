@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PdfUpload from './PdfUpload';
-import PdfDisplay from './PdfDisplay';
-import PdfResizer from './PdfResizer';
+import PdfUpload from '../PdfManipulation/PdfUpload';
+import PdfDisplay from '../PdfManipulation/PdfDisplay';
+import PdfResizer from '../PdfManipulation/PdfResizer';
 import './ApplicationPage.css';
 
 function ApplicationPage() {

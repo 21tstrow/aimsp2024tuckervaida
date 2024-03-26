@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import ImageTile from './ImageTile';
-import SearchBar from './SearchBar'; // Import the SearchBar component
+import ImageTile from '../ImageTile/ImageTile.js';
+import SearchBar from '../SearchBar/SearchBar.js'; // Import the SearchBar component
 import './HomePage.css';
-import './SearchBar.css'
+import '../SearchBar/SearchBar.css'
 
-import Mountain1 from './components/Mountain1.jpeg';
-import Mountain2 from './components/Mountain2.jpeg';
-import Mountain3 from './components/Mountain3.jpeg';
+import Mountain1 from '../components/Mountain1.jpeg';
+import Mountain2 from '../components/Mountain2.jpeg';
+import Mountain3 from '../components/Mountain3.jpeg';
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
