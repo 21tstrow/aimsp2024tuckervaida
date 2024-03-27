@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import './PdfDisplay.css';
+import "react-pdf/dist/esm/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -56,6 +57,9 @@ function PdfDisplay({ file, onTextSelect }) {
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
                 className="pdf-page"
+                scale={1.5}               
+                renderAnnotationLayer={false} 
+                renderTextLayer={true}
               />
             ))}
           </Document>
