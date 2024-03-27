@@ -34,15 +34,6 @@ function PdfDisplay({ file, onTextSelect }) {
 
   return (
     <div className='return-wrapper'>
-      <div className="pdf-display">
-        {file && (
-          <div className="pdf-meta">
-            <p>
-              Selected Text: {selectedText}
-            </p>
-          </div>
-        )}
-      </div>
       <div className="pdf-display-container">
         {file && (
           <Document
