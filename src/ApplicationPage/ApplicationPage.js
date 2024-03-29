@@ -8,8 +8,8 @@ import { MainContainer, ChatContainer, MessageList, Message, MessageInput, Typin
 
 
 const API_KEY = "API_KEY";
-// "Explain things like you would to a 10 year old learning how to code."
-const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
+// Put your own API key to run this code
+const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
 
@@ -109,7 +109,7 @@ function ApplicationPage() {
     });
   }
 
-
+// The line between the HTML code denotes the other part of the application page (ChatBox) 
 
   return (
     <div className="application-page">
@@ -124,6 +124,7 @@ function ApplicationPage() {
           <PdfDisplay file={resizedFile || file} onTextSelect={handleTextSelect} />
         </div>
     </div>
+
     <div className="App">
       <div style={{ position:"relative", height: "900px", width: "600px"  }}>
         <MainContainer>
@@ -171,6 +172,9 @@ return (
           <PdfDisplay file={resizedFile || file} onTextSelect={handleTextSelect} />
         </div>
       </div>
+
+    // Distinction between the two sides of our application page
+
       <div className="api-section">
         <div className="api-content">
           <h2>OpenAI API</h2>
@@ -189,23 +193,3 @@ return (
   );
   */
 
-
-
-/*
-// src/Page.js
-import React from 'react';
-import ChatBox from './Chatbox.jsx'; // Adjust the path as necessary
-
-function ApplicationPage() {
-  return (
-    <div className="page">
-      {}
-      <h1>Welcome to BookReader!</h1>
-      {}
-      <ChatBox />
-    </div>
-  );
-}
-
-export default ApplicationPage;
-*/
