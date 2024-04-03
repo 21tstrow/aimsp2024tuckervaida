@@ -16,6 +16,8 @@ function PdfDisplay({ file, onTextSelect }) {
 
   // Event listener for text selection
   useEffect(() => {
+    if (!onTextSelect) return; // Check if onTextSelect is provided
+
     const handleTextSelection = () => {
       const selection = window.getSelection();
       const text = selection.toString();

@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from React Router
 import ImageTile from '../ImageTile/ImageTile.js';
-import SearchBar from '../SearchBar/SearchBar.js'; // Import the SearchBar component
+import SearchBar from '../SearchBar/SearchBar.js';
 import './HomePage.css';
-import '../SearchBar/SearchBar.css'
-
-import Mountain1 from '../components/Mountain1.jpeg';
-import Mountain2 from '../components/Mountain2.jpeg';
-import Mountain3 from '../components/Mountain3.jpeg';
+import '../SearchBar/SearchBar.css';
+import plusImage from '../components/Plus.png'; // Import the plus.png image
+import ApplicationPage from '../ApplicationPage/ApplicationPage.js'; // Import the ApplicationPage component
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [imageTilesData, setImageTilesData] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null); // State to store the selected file
 
-  // Assuming you have an array of image data with titles and URLs
-  const imageTilesData = [
-    { title: 'Title1', imageUrl: Mountain1 },
-    { title: 'Title2', imageUrl: Mountain2 },
-    { title: 'Title3', imageUrl: Mountain3 },
-    { title: 'Title4', imageUrl: Mountain1 },
-    { title: 'Title5', imageUrl: Mountain2 },
-    { title: 'Title6', imageUrl: Mountain3 },
-    { title: 'Title91', imageUrl: Mountain1 },
-    { title: 'Title92', imageUrl: Mountain2 },
-    { title: 'Title93', imageUrl: Mountain3 },
-    { title: 'Title94', imageUrl: Mountain1 },
-    { title: 'Title95', imageUrl: Mountain2 },
-    { title: 'Title96', imageUrl: Mountain3 },
-    // Add more image data as needed
-  ];
+  useEffect(() => {
+    // Fetch the list of files from the server
+    fetch('http://localhost:5000/public/uploads')
+      .then(response => response.json())
+      .then(data => setImageTilesData(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []); // Empty dependency array ensures the effect runs only once on component mount
 
   // Filter image tiles based on search query
-  const filteredImageTiles = imageTilesData.filter(imageTile => 
+  const filteredImageTiles = imageTilesData.filter(imageTile =>
     imageTile.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Function to handle click event for regular image tiles
+  const handleImageTileClick = (file) => {
+    setSelectedFile(file); // Set the selected file
+  };
 
   return (
     <div className="homepage">
@@ -41,10 +38,29 @@ const HomePage = () => {
       </div>
 
       <div className="image-tiles-wrapper">
+        {/* Render filtered image tiles */}
         {filteredImageTiles.map((imageTileData, index) => (
-          <ImageTile key={index} title={imageTileData.title} imageUrl={imageTileData.imageUrl} />
+          <Link key={index} to="/application" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ImageTile 
+              title={imageTileData.title} 
+              imageUrl={imageTileData.imageUrl} 
+              onClick={() => handleImageTileClick(imageTileData.file)} // Pass onClick handler
+              file={imageTileData.file} // Pass the file to ImageTile
+            />
+          </Link>
         ))}
+        {/* Render additional tile for uploading */}
+        <Link to="/upload" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <ImageTile 
+            title="Upload Files" 
+            imageUrl={plusImage} 
+            isUploadTile 
+          />
+        </Link>
       </div>
+
+      {/* Render ApplicationPage component only when a file is selected */}
+      {selectedFile && <ApplicationPage file={selectedFile} />}
     </div>
   );
 };

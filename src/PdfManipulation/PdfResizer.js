@@ -4,8 +4,17 @@ import { PDFDocument } from 'pdf-lib';
 function PdfResizer({ file, onPdfResized }) {
   const [resizedPdf, setResizedPdf] = useState(null);
 
-  const resizePdf = async (file) => {
-    const pdfBytes = await file.arrayBuffer();
+  const resizePdf = async (input) => {
+    let pdfBytes;
+    
+    // Check if the input is a URL or a File object
+    if (typeof input === 'string') {
+      const response = await fetch(input);
+      pdfBytes = await response.arrayBuffer();
+    } else {
+      pdfBytes = await input.arrayBuffer();
+    }
+
     const pdfDoc = await PDFDocument.load(pdfBytes);
     const pages = pdfDoc.getPages();
 
@@ -18,8 +27,9 @@ function PdfResizer({ file, onPdfResized }) {
     });
 
     const resizedPdfBytes = await pdfDoc.save();
-    setResizedPdf(new Blob([resizedPdfBytes]));
-    onPdfResized(new Blob([resizedPdfBytes])); // Pass the resized PDF to the parent component
+    const resizedPdfBlob = new Blob([resizedPdfBytes]);
+    setResizedPdf(resizedPdfBlob);
+    onPdfResized(resizedPdfBlob); // Pass the resized PDF to the parent component
   };
 
   // Resize PDF when file changes

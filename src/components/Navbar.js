@@ -35,12 +35,7 @@ function Navbar() {
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='/application' className='nav-links'>
-                            Application
-                        </Link>
-                    </li>
-                    <li className='nav-item'>
-                        <Link to='/' className='nav-links'>
+                        <Link to='/upload' className='nav-links'>
                             About
                         </Link>
                     </li>

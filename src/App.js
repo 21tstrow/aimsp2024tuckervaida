@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar.js';
 import HomePage from './HomePage/HomePage';
 import ApplicationPage from './ApplicationPage/ApplicationPage'; // Import the ApplicationPage component
+import UploadPage from './UploadPage.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/application" element={<ApplicationPage />} />
+            <Route path="/upload" element={<UploadPage />} />
           </Routes>
         </div>
       </Router>

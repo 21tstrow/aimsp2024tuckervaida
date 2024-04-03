@@ -6,13 +6,12 @@ import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import './ApplicationPage.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 
+const PDF_ADDRESS = `${process.env.PUBLIC_URL}/uploads/Paper1.pdf`; // Global variable holding the PDF address
 
-const API_KEY = "API_KEY";
-// Put your own API key to run this code
+const API_KEY = "API-KEY"; // Put your own API key to run this code
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
-
 
 function ApplicationPage() {
   const [file, setFile] = useState(null);
@@ -31,19 +30,19 @@ function ApplicationPage() {
     setFile(selectedFile);
   };
 
-  const handlePdfResized = (resizedPdf) => {
-    setResizedFile(resizedPdf);
+  const handlePdfResized = (resizedPdfBlob) => {
+    setResizedFile(resizedPdfBlob);
+    // You can perform additional actions with the resized PDF blob if needed
+    console.log("Resized PDF blob:", resizedPdfBlob);
   };
 
   const handleTextInputChange = (event) => {
     setTextInput(event.target.value);
   };
 
-
   const handleTextSelect = (selectedText) => {
     setTextInput(selectedText); // Update input value with selected text
   };
-
 
   const handleSend = async (message) => {
     const newMessage = {
@@ -62,11 +61,7 @@ function ApplicationPage() {
     await processMessageToChatGPT(newMessages);
   };
 
-  async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
-    // Format messages for chatGPT API
-    // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
-    // So we need to reformat
-
+  async function processMessageToChatGPT(chatMessages) {
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
       if (messageObject.sender === "ChatGPT") {
@@ -74,39 +69,50 @@ function ApplicationPage() {
       } else {
         role = "user";
       }
-      return { role: role, content: messageObject.message}
+      return { role: role, content: messageObject.message }
     });
-
-
-    // Get the request body set up with the model we plan to use
-    // and the messages which we formatted above. We add a system message in the front to'
-    // determine how we want chatGPT to act. 
+  
     const apiRequestBody = {
       "model": "gpt-3.5-turbo",
       "messages": [
-        systemMessage,  // The system message DEFINES the logic of our chatGPT
-        ...apiMessages // The messages from our chat with ChatGPT
+        systemMessage,
+        ...apiMessages
       ]
-    }
-
-    await fetch("https://api.openai.com/v1/chat/completions", 
-    {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + API_KEY,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(apiRequestBody)
-    }).then((data) => {
-      return data.json();
-    }).then((data) => {
-      console.log(data);
-      setMessages([...chatMessages, {
-        message: data.choices[0].message.content,
-        sender: "ChatGPT"
-      }]);
+    };
+  
+    console.log("API Request Body:", apiRequestBody); // Log request body
+  
+    try {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + API_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(apiRequestBody)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("API Response:", data); // Log API response
+  
+      if (data.choices && data.choices.length > 0) {
+        setMessages([...chatMessages, {
+          message: data.choices[0].message.content,
+          sender: "ChatGPT"
+        }]);
+      } else {
+        console.error("No choices found in API response");
+      }
+  
       setIsTyping(false);
-    });
+    } catch (error) {
+      console.error("Error fetching data:", error.message); // Log fetch error
+      setIsTyping(false);
+    }
   }
 
 // The line between the HTML code denotes the other part of the application page (ChatBox) 
@@ -114,16 +120,12 @@ function ApplicationPage() {
   return (
     <div className="application-page">
       <div className='pdf-viewer'>
-        <div className="pdf-upload-section">
-          <h2>PDF Upload</h2>
-          <PdfUpload onFileChange={handleFileChange} />
-        </div>
         <div className="pdf-display-section">
           <h2>PDF Display</h2>
-          <PdfResizer file={file} onPdfResized={handlePdfResized} />
-          <PdfDisplay file={resizedFile || file} onTextSelect={handleTextSelect} />
+          <PdfResizer file={PDF_ADDRESS} onPdfResized={handlePdfResized} />
+          <PdfDisplay file={PDF_ADDRESS} />
         </div>
-    </div>
+      </div>
 
     <div className="App">
       <div style={{ position:"relative", height: "900px", width: "600px"  }}>
@@ -147,49 +149,4 @@ function ApplicationPage() {
   );
 }
 
-export default ApplicationPage;
-
-
-
-
-
-
-
-
-
-
-/*
-return (
-    <div className="application-page">
-      <div className='pdf-viewer'>
-        <div className="pdf-upload-section">
-          <h2>PDF Upload</h2>
-          <PdfUpload onFileChange={handleFileChange} />
-        </div>
-        <div className="pdf-display-section">
-          <h2>PDF Display</h2>
-          <PdfResizer file={file} onPdfResized={handlePdfResized} />
-          <PdfDisplay file={resizedFile || file} onTextSelect={handleTextSelect} />
-        </div>
-      </div>
-
-    // Distinction between the two sides of our application page
-
-      <div className="api-section">
-        <div className="api-content">
-          <h2>OpenAI API</h2>
-          <div className="api-input">
-            <input
-              type="text"
-              value={textInput}
-              onChange={handleTextInputChange}
-              placeholder="Enter text for OpenAI API"
-            />
-            <button onClick={handleApiSubmit}>Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-  */
-
+export default ApplicationPage
