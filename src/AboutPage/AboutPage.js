@@ -15,6 +15,31 @@ const contributors = [
     description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     image: ProfilePic2
   },
+  {
+    name: 'Jane Smith',
+    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    image: ProfilePic2
+  },
+  {
+    name: 'Jane Smith',
+    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    image: ProfilePic2
+  },
+  {
+    name: 'Jane Smith',
+    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    image: ProfilePic2
+  },
+  {
+    name: 'Jane Smith',
+    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    image: ProfilePic2
+  },
+  {
+    name: 'Jane Smith',
+    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    image: ProfilePic2
+  },
   // Add more contributors as needed
 ];
 

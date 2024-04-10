@@ -41,7 +41,9 @@ function Navbar() {
                         </Link>
                     </li>
                 </ul>
-                <Button>SIGN UP</Button>
+                <Link to="/sign-up">
+                    <Button>SIGN UP</Button>
+                </Link>
             </div>
         </nav>
     )

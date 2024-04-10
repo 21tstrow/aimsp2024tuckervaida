@@ -4,6 +4,7 @@ import HomePage from './HomePage/HomePage';
 import ApplicationPage from './ApplicationPage/ApplicationPage'; // Import the ApplicationPage component
 import UploadPage from './UploadPage.js';
 import AboutPage from './AboutPage/AboutPage.js';
+import SignUpPage from './SignUpPage/SignUpPage.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/application" element={<ApplicationPage />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
           </Routes>
         </div>
       </Router>
