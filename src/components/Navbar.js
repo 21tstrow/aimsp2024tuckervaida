@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { Button } from './Button';
+import logoimg from './logo.png';
 
 function Navbar() {
     const [navbarWidth, setNavbarWidth] = useState(250); // Default width for the navbar
@@ -26,21 +27,21 @@ function Navbar() {
         <nav className="navbar" style={{ width: navbarWidth }}>
             <div className="navbar-container">
                 <Link to="/" className="navbar-logo">
-                    Analyze.Ai
+                <img className="navbar-logo-image" src={require('./logo.png')} alt="Logo"></img>
                 </Link>
                 <ul className='nav-menu'>
                     <li className='nav-item'>
                         <Link to='/' className='nav-links'>
-                            Home
+                            <img className="navbar-link-image" src={require('./Home.png')} alt="Logo"></img>
                         </Link>
                     </li>
                     <li className='nav-item'>
                         <Link to='/upload' className='nav-links'>
-                            About
+                        <img className="navbar-link-image" src={require('./About.png')} alt="Logo"></img>
                         </Link>
                     </li>
                 </ul>
-                <Button buttonStyle='btn-outline'> SIGN UP</Button>
+                <Button>SIGN UP</Button>
             </div>
         </nav>
     )

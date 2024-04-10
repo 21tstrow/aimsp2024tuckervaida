@@ -50,7 +50,7 @@ function PdfDisplay({ file, onTextSelect }) {
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
                 className="pdf-page"
-                scale={1.5}               
+                scale={0.95}               
                 renderAnnotationLayer={false} 
                 renderTextLayer={true}
               />
