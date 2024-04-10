@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './SignUpPage.css'
+import './SignUpPage.css';
+import lockimg from "./lock.png";
 
 function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -22,9 +23,11 @@ function SignUpPage() {
   };
 
   return (
-    <div>
+    <div className='sign-up-page'>
+        <h1>Create an Account</h1>
         <form className="form-container" onSubmit={handleSubmit}>
-        <label classname="form-label" htmlFor="name">Name:</label>
+      
+        <label classname="form-label" htmlFor="name">Name</label>
         <input className='form-input'
             type="text"
             id="name"
@@ -33,8 +36,18 @@ function SignUpPage() {
             onChange={handleChange}
         />
         <br />
+       
+        <label classname="form-label" htmlFor="phone">Phone (recommended)</label>
+        <input className='form-input'
+            type="text"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+        />
+        <br />
 
-        <label classname="form-label" htmlFor="email">Email:</label>
+        <label classname="form-label" htmlFor="email">Email</label>
         <input className='form-input'
             type="email"
             id="email"
@@ -44,7 +57,18 @@ function SignUpPage() {
         />
         <br />
 
-        <label classname="form-label" htmlFor="password">Password:</label>
+        <label classname="form-label" htmlFor="username">Username</label>
+        <input className='form-input'
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+        />
+        <br />
+
+
+        <label classname="form-label" htmlFor="password">Password</label>
         <input className='form-input'
             type="password"
             id="password"
@@ -54,7 +78,7 @@ function SignUpPage() {
         />
         <br />
 
-        <button type="submit" className='form-button'>Sign Up</button>
+        <button type="submit" className='form-button'>Create Account</button>
         </form>
     </div>
   );
