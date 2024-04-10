@@ -36,7 +36,7 @@ function Navbar() {
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='/upload' className='nav-links'>
+                        <Link to='/about' className='nav-links'>
                         <img className="navbar-link-image" src={require('./About.png')} alt="Logo"></img>
                         </Link>
                     </li>

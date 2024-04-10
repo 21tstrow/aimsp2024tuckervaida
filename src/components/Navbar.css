@@ -3,8 +3,9 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 250px; /* Default width */
-  min-width: 100px; /* Minimum width */
+  width: 150px; /* Default width */
+  min-width: 150px; /* Minimum width */
+  max-width: 150px;
   background-color: #051926;
   display: flex;
   flex-direction: column;
@@ -63,11 +64,11 @@
   color: #107CB2;
 }
 
-
+/*
 @media screen and (max-width: 960px) {
   .navbar {
-      width: 100%; /* Change width to percentage */
-      min-width: 100px;
+      width: 100%; 
+      min-width: 150px;
   }
 
   .navbar-logo {
@@ -78,3 +79,4 @@
       margin-bottom: 30px;
   }
 }
+*/

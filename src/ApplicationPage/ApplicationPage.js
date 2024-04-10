@@ -8,7 +8,7 @@ import { MainContainer, ChatContainer, MessageList, Message, MessageInput, Typin
 
 const PDF_ADDRESS = `${process.env.PUBLIC_URL}/uploads/Paper1.pdf`; // Global variable holding the PDF address
 
-const API_KEY = "API-KEY"; // Put your own API key to run this code
+const API_KEY = "API_KEY"; // Put your own API key to run this code
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
@@ -121,17 +121,15 @@ function ApplicationPage() {
     <div className="application-page">
       <div className='pdf-viewer'>
         <div className="pdf-display-section">
-          <h2>PDF Display</h2>
           <PdfResizer file={PDF_ADDRESS} onPdfResized={handlePdfResized} />
           <PdfDisplay file={PDF_ADDRESS} />
         </div>
       </div>
 
-    <div className="App">
-      <div style={{ position:"relative", height: "900px", width: "600px"  }}>
+    <div className="chatApp">
         <MainContainer>
           <ChatContainer>       
-            <MessageList 
+            <MessageList style={{ backgroundColor: "#10384E" }}
               scrollBehavior="smooth" 
               typingIndicator={isTyping ? <TypingIndicator content="ChatGPT is typing" /> : null}
             >
@@ -140,11 +138,10 @@ function ApplicationPage() {
                 return <Message key={i} model={message} />
               })}
             </MessageList>
-            <MessageInput placeholder="Type message here" onSend={handleSend} />        
+            <MessageInput style={{ backgroundColor: "#051926" }} placeholder="Type message here" onSend={handleSend} />        
           </ChatContainer>
         </MainContainer>
       </div>
-    </div>
     </div>
   );
 }
