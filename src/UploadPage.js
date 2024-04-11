@@ -22,7 +22,7 @@ const UploadPage = () => {
         setProgress(prevState => {
             return {...prevState, started: true}
         })
-        axios.post('http://localhost:5000/api/upload', fd, {
+        axios.post('http://localhost:5001/api/upload', fd, {
             onUploadProgress: (progressEvent) => { setProgress(prevState => {
                 return { ...prevState, pc: progressEvent.progress*100 }
             }) },
