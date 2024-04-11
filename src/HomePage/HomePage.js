@@ -14,7 +14,7 @@ const HomePage = () => {
 
   useEffect(() => {
     // Fetch the list of files from the server
-    fetch('http://localhost:5000/public/uploads')
+    fetch('http://localhost:5001/public/uploads')
       .then(response => response.json())
       .then(data => setImageTilesData(data))
       .catch(error => console.error('Error fetching data:', error));

@@ -9,7 +9,6 @@
   width: 95%; /* Take up 100% of the viewport width */
   z-index: 999; /* Ensure it appears above other content */
   padding: 10px; /* Add padding for better visual appearance */
-  background-color: #ffffff; /* Background color */
   box-sizing: border-box;
 }
 
@@ -19,18 +18,21 @@
   border: 1px solid #ccc; /* Border */
   border-radius: 10px; /* Border radius */
   font-size: 16px; /* Font size */
+  background-color: #C8E3FA;
+  color: #FFF;
 }
   
 .search-input:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #107CB2;
 }
 
 .search-button {
-  background-color: #007bff;
+  background-color: #051926;
   color: white;
-  padding: 10px 20px;
-  border: none;
+  padding: 8px 20px;
+  margin-left: 10px;
+  border: 1px solid #107CB2;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
@@ -38,5 +40,5 @@
 }
 
 .search-button:hover {
-  background-color: #0056b3;
+  background-color: #107CB2;
 }
