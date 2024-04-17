@@ -14,6 +14,8 @@ const systemMessage = {
 }
 
 function ApplicationPage() {
+  const [userInput, setUserInput] = useState('');
+  const [selectedText, setSelectedText] = useState('');
   const [file, setFile] = useState(null);
   const [resizedFile, setResizedFile] = useState(null);
   const [textInput, setTextInput] = useState('');
@@ -37,29 +39,43 @@ function ApplicationPage() {
   };
 
   const handleTextInputChange = (event) => {
-    setTextInput(event.target.value);
-  };
+    // Check if event and event.target are defined
+    if (event && event.target && event.target.value !== undefined) {
+        setTextInput(event.target.value);
+    } else {
+        console.error("Unexpected event object:", event);
+    }
+};
 
-  const handleTextSelect = (selectedText) => {
-    setTextInput(selectedText); // Update input value with selected text
-  };
-
-  const handleSend = async (message) => {
-    const newMessage = {
-      message,
-      direction: 'outgoing',
-      sender: "user"
-    };
-
-    const newMessages = [...messages, newMessage];
+  function handleTextSelect(selectedText) {
+  // Check if selectedText is not null
+  if (selectedText !== "") {
+      // Prefix the selected text with "Please explain: "
+      const prefixedText = "Please explain: " + selectedText;
     
-    setMessages(newMessages);
+      // Update the textInput state
+      setTextInput(prefixedText);
+  }
+  // Update the selectedText state regardless of whether it is null
+  setSelectedText(selectedText);
+  }
 
-    // Initial system message to determine ChatGPT functionality
-    // How it responds, how it talks, etc.
-    setIsTyping(true);
-    await processMessageToChatGPT(newMessages);
+const handleSend = async (message) => {
+  // If you want to prepend "Please explain: " to the user's message
+
+  const newMessage = {
+      message: message,
+      direction: 'outgoing',
+      sender: "user",
   };
+
+  const newMessages = [...messages, newMessage];
+  setMessages(newMessages);
+
+  // Continue with the existing processMessageToChatGPT function
+  setIsTyping(true);
+  await processMessageToChatGPT(newMessages);
+};
 
   async function processMessageToChatGPT(chatMessages) {
     let apiMessages = chatMessages.map((messageObject) => {
@@ -122,7 +138,7 @@ function ApplicationPage() {
       <div className='pdf-viewer'>
         <div className="pdf-display-section">
           <PdfResizer file={PDF_ADDRESS} onPdfResized={handlePdfResized} />
-          <PdfDisplay file={PDF_ADDRESS} />
+          <PdfDisplay file={PDF_ADDRESS} onTextSelect={handleTextSelect}/>
         </div>
       </div>
 
@@ -138,7 +154,13 @@ function ApplicationPage() {
                 return <Message key={i} model={message} />
               })}
             </MessageList>
-            <MessageInput style={{ backgroundColor: "#051926" }} placeholder="Type message here" onSend={handleSend} />        
+            <MessageInput
+              style={{ backgroundColor: "#051926" }}
+              placeholder="Type message here"
+              onSend={handleSend}
+              value={textInput}  // Bind value to textInput state
+              onChange={handleTextInputChange}  // Update textInput state when input box value changes
+            />    
           </ChatContainer>
         </MainContainer>
       </div>
