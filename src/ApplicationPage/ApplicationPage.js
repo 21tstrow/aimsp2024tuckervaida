@@ -13,7 +13,10 @@ const systemMessage = {
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
 
+
+
 function ApplicationPage() {
+  const [inputString, setInputString] = useState('');
   const [userInput, setUserInput] = useState('');
   const [selectedText, setSelectedText] = useState('');
   const [file, setFile] = useState(null);
@@ -38,13 +41,9 @@ function ApplicationPage() {
     console.log("Resized PDF blob:", resizedPdfBlob);
   };
 
-  const handleTextInputChange = (event) => {
-    // Check if event and event.target are defined
-    if (event && event.target && event.target.value !== undefined) {
-        setTextInput(event.target.value);
-    } else {
-        console.error("Unexpected event object:", event);
-    }
+  const handleTextInputChange = (inputValue) => {
+    // Update textInput state directly with the input value
+    setTextInput(inputValue);
 };
 
   function handleTextSelect(selectedText) {
