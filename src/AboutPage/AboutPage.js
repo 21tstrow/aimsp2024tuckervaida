@@ -24,7 +24,7 @@ const contributors = [
   },
   {
     name: 'Anirudh Vayalali',
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    description: 'I am a Computer Science student at UT Dallas, pursuing a specialization in Artificial Intelligence and Machine Learning technologies. In addition to these interests, I like to do graphic design freelancing in my free time, using Adobe Illustrator.',
     image: AndyPic
   },
   {
