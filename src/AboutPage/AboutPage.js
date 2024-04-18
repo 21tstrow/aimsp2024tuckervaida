@@ -2,6 +2,7 @@ import React from 'react';
 import './AboutPage.css'; // Import CSS file for styling
 import ProfilePic1 from "./ProfilePics/ProfilePic1.jpg"
 import ProfilePic2 from "./ProfilePics/ProfilePic2.jpeg"
+import AnuPic from "./ProfilePics/Anu.jpg"
 
 // Sample data of contributors
 const contributors = [
@@ -12,13 +13,13 @@ const contributors = [
   },
   {
     name: 'Jane Smith',
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    description:"lorem" ,
     image: ProfilePic2
   },
   {
-    name: 'Jane Smith',
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    image: ProfilePic2
+    name: 'Anushrutha Boyapati',
+    description: 'Apart from being a student in computer science, I am also STEM Coding Instructor at iCode Plano currently teaching Unreal Engine 5. Outside of academics, I spend much of my time writing or reading, with my favorite genre fantasy',
+    image: AnuPic
   },
   {
     name: 'Jane Smith',
