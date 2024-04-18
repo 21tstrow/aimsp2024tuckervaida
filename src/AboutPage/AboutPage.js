@@ -3,6 +3,7 @@ import './AboutPage.css'; // Import CSS file for styling
 import ProfilePic1 from "./ProfilePics/ProfilePic1.jpg"
 import ProfilePic2 from "./ProfilePics/ProfilePic2.jpeg"
 import AnuPic from "./ProfilePics/Anu.jpg"
+import AndyPic from "./ProfilePics/Andy.JPEG"
 
 // Sample data of contributors
 const contributors = [
@@ -22,9 +23,9 @@ const contributors = [
     image: AnuPic
   },
   {
-    name: 'Jane Smith',
+    name: 'Anirudh Vayalali',
     description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    image: ProfilePic2
+    image: AndyPic
   },
   {
     name: 'Jane Smith',
