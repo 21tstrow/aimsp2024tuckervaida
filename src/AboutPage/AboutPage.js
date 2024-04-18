@@ -19,7 +19,7 @@ const contributors = [
   },
   {
     name: 'Anushrutha Boyapati',
-    description: 'Apart from being a student in computer science, I am also STEM Coding Instructor at iCode Plano currently teaching Unreal Engine 5. Outside of academics, I spend much of my time writing or reading, with my favorite genre fantasy',
+    description: 'Apart from being a student in computer science, I am also STEM Coding Instructor at iCode Plano currently teaching Unreal Engine 5.',
     image: AnuPic
   },
   {
