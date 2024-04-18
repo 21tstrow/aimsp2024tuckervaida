@@ -5,6 +5,8 @@ import ProfilePic2 from "./ProfilePics/ProfilePic2.jpeg"
 import AnuPic from "./ProfilePics/Anu.jpg"
 import AndyPic from "./ProfilePics/Andy.JPEG"
 import picaims from "./ProfilePics/picaims.png"
+import HimaPic from "./ProfilePics/HimaPic.JPG"
+
 
 
 // Sample data of contributors
@@ -35,9 +37,9 @@ const contributors = [
     image: picaims
   },
   {
-    name: 'Jane Smith',
+    name: 'Hima Nagi Reddy',
     description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    image: ProfilePic2
+    image: HimaPic
   },
   {
     name: 'Jane Smith',
