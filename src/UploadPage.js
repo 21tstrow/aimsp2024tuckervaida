@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import axios from "axios";
+import './UploadPage.css'; // Import CSS file for styling
 
 const UploadPage = () => {
     const [ files, setFiles] = useState(null);
@@ -43,7 +44,7 @@ const UploadPage = () => {
 
     return (
     <div>
-      <h1>Upload PDF</h1>
+      <h1>Upload a PDF</h1>
       
       <input onChange={ (e) => {setFiles(e.target.files)}} type="file" multiple></input>
       
