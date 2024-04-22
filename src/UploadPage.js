@@ -48,8 +48,7 @@ const UploadPage = () => {
       
       <input onChange={ (e) => {setFiles(e.target.files)}} type="file" multiple></input>
       
-      <button onClick={ handleUpload }>Upload</button>
-
+      <button onClick={ handleUpload } type="submit" className="upload-button">Upload</button>
       {progress.started && <progress max="100" value={progress.pc}></progress>}
       { msg && <span>{msg}</span>}
     </div>
