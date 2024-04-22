@@ -39,9 +39,9 @@ input[type="file"] {
     font-size: 16px;
 }
 
-.btn--upload {
+button {
     display: block;
-    width: flex;
+    width: 100%;
     padding: 10px;
     margin-top: 10px;
     background-color: #051926;
@@ -56,7 +56,7 @@ input[type="file"] {
 
 
 
-.btn--upload:hover {
+button:hover {
     background-color: #107CB2;
     color: #051926;
 }
