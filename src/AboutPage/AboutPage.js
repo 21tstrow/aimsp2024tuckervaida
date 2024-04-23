@@ -6,13 +6,14 @@ import AnuPic from "./ProfilePics/Anu.jpg"
 import AndyPic from "./ProfilePics/Andy.JPEG"
 import picaims from "./ProfilePics/picaims.png"
 import HimaPic from "./ProfilePics/HimaPic.JPG"
+import TuckPick from "./ProfilePics/Tucker Pic.png"
 
 // Sample data of contributors
 const contributors = [
   {
-    name: 'John Doe',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    image: ProfilePic1
+    name: 'Tucker Strow',
+    description: "I'm a mentor for the project. I am a senior studying Finance :)",
+    image: TuckPick
   },
   {
     name: 'Jane Smith',
