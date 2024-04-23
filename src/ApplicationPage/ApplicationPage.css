@@ -1,6 +1,7 @@
 .application-page {
   display: flex;
-  width: 100%;
+  width: calc(100vw - 190px);
+  margin-left: 0px;
 }
 
 .pdf-viewer,
