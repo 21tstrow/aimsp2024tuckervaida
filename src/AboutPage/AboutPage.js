@@ -7,8 +7,6 @@ import AndyPic from "./ProfilePics/Andy.JPEG"
 import picaims from "./ProfilePics/picaims.png"
 import HimaPic from "./ProfilePics/HimaPic.JPG"
 
-
-
 // Sample data of contributors
 const contributors = [
   {
