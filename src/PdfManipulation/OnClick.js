@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import PdfDisplay from './PdfDisplay'; // Assuming PdfDisplay.js is in the same directory
+import PdfDisplay from './PdfDisplay'; // Importing once is sufficient
 import samplePDF from './sample.pdf'; // Path to your sample PDF file
+import ChatComponent from './ChatComponent'; // Simplified chat component
 
 const Home = () => {
   const [selectedText, setSelectedText] = useState('');
 
+  // This function is called when text is selected within the PDF viewer
   const handleTextSelect = (text) => {
     setSelectedText(text);
     console.log('Selected Text:', text);
   };
 
-  const handleLogSelectedText = () => {
+  // This function logs the selected text when the button is clicked
+  const handleLogSelected Text = () => {
     console.log('Selected Text from Button Click:', selectedText);
   };
 
