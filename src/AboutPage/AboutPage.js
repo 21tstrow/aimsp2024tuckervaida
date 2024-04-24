@@ -16,8 +16,8 @@ const contributors = [
     image: TuckPick
   },
   {
-    name: 'Jane Smith',
-    description:"lorem" ,
+    name: 'Oluwadamilare Sunmola',
+    description:"I am a Computer Science student at the University Of Texas At Dallas, i like watching boxing and MMA matches" ,
     image: ProfilePic2
   },
   {
