@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import './PdfDisplay.css';
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import { PDFDownloadLink, PageText } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -33,33 +35,51 @@ function PdfDisplay({ file, onTextSelect }) {
       window.removeEventListener('mouseup', handleTextSelection);
     };
   }, [onTextSelect]);
+  const downloadPdf = async () => {
+    try {
+      const blob = await fetch(file).then(res => res.blob());
+      saveAs(blob, "downloaded.pdf");  // Use saveAs to download the file
+    } catch (error) {
+      console.error('Error downloading the file: ', error);
+    }
+  };
 
   return (
-    <div className='return-wrapper'>
-      <div className="pdf-display-container">
-        {file && (
-          <Document
-            file={file}
-            onLoadSuccess={onDocumentLoadSuccess}
-            renderMode="svg"
-            noData={true}
-            className="pdf-document"
-          >
-            {Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                className="pdf-page"
-                scale={0.95}               
-                renderAnnotationLayer={false} 
-                renderTextLayer={true}
-              />
-            ))}
-          </Document>
-        )}
+    <div>
+      <button onClick={downloadPdf}>Download PDF</button>
+      <div className='return-wrapper'>
+        <div className="pdf-display-container">
+          {file && (
+            <PdfDocument file={file} onDocumentLoadSuccess={onDocumentLoadSuccess} numPages={numPages} />
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
+const PdfDocument = ({ file, onDocumentLoadSuccess, numPages }) => {
+  
+  return (
+    <Document
+      file={file}
+      onLoadSuccess={onDocumentLoadSuccess}
+      renderMode="svg"
+      noData={true}
+      className="pdf-document"
+    >
+      {Array.from(new Array(numPages), (el, index) => (
+        <Page
+          key={`page_${index + 1}`}
+          pageNumber={index + 1}
+          className="pdf-page"
+          scale={0.95}
+          renderAnnotationLayer={false}
+          renderTextLayer={true}
+        />
+      ))}
+    </Document>
+  );
+};
 
 export default PdfDisplay;
