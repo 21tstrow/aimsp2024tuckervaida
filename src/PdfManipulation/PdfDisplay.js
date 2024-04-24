@@ -1,65 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import { pdfjs } from 'react-pdf';
 import './PdfDisplay.css';
-import "react-pdf/dist/esm/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js`;
 
-function PdfDisplay({ file, onTextSelect }) {
-  const [numPages, setNumPages] = useState(null);
-  const [selectedText, setSelectedText] = useState('');
-
-  // Event handler for loading PDF
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
-
-  // Event listener for text selection
-  useEffect(() => {
-    if (!onTextSelect) return; // Check if onTextSelect is provided
+function PdfDisplay({ file, onTextSelect, useAdvancedViewer = false }) {
+    const [selectedText, setSelectedText] = useState('');
 
     const handleTextSelection = () => {
-      const selection = window.getSelection();
-      const text = selection.toString();
-      setSelectedText(text);
-      // Pass selected text to parent component
-      onTextSelect(text);
-      console.log("Selected Text:", text); // Log the selected text
+        const selection = window.getSelection();
+        const text = selection.toString();
+        setSelectedText(text);
+        if (onTextSelect) onTextSelect(text);
+        console.log("Selected Text:", text);
     };
 
-    window.addEventListener('mouseup', handleTextSelection);
+    useEffect(() => {
+        if (useAdvancedViewer) {
+            window.addEventListener('mouseup', handleTextSelection);
+            return () => window.removeEventListener('mouseup', handleTextSelection);
+        }
+    }, [useAdvancedViewer]);
 
-    return () => {
-      window.removeEventListener('mouseup', handleTextSelection);
-    };
-  }, [onTextSelect]);
-
-  return (
-    <div className='return-wrapper'>
-      <div className="pdf-display-container">
-        {file && (
-          <Document
-            file={file}
-            onLoadSuccess={onDocumentLoadSuccess}
-            renderMode="svg"
-            noData={true}
-            className="pdf-document"
-          >
-            {Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                className="pdf-page"
-                scale={0.95}               
-                renderAnnotationLayer={false} 
-                renderTextLayer={true}
-              />
-            ))}
-          </Document>
-        )}
-      </div>
-    </div>
-  );
+    return (
+        <div className='pdf-display-container'>
+            {useAdvancedViewer ? (
+                <Worker workerUrl={`//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js`}>
+                    {file && (
+                        <Viewer
+                            fileUrl={file}
+                            defaultScale={0.95}
+                            onDocumentLoad={({ numPages }) => console.log('Loaded a file with ', numPages, ' pages')}
+                            onTextSelection={handleTextSelection}
+                        />
+                    )}
+                </Worker>
+            ) : (
+                file && (
+                    <embed src={file} type="application/pdf" width="100%" height="100%" />
+                )
+            )}
+        </div>
+    );
 }
 
 export default PdfDisplay;

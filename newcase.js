@@ -1,59 +1,61 @@
-// JavaScript for Drag and Drop
-const dropArea = document.querySelector(".drag-area"),
-      dragText = dropArea.querySelector("header"),
-      button = dropArea.querySelector("button"),
-      input = dropArea.querySelector("input");
-let file;
+import React, { useState } from 'react';
 
-button.onclick = () => {
-    input.click();
-}
+const PdfUploader = () => {
+    const [file, setFile] = useState(null);
+    const [fileUrl, setFileUrl] = useState('');
 
-input.addEventListener("change", function() {
-    file = this.files[0];
-    dropArea.classList.add("active");
-    showFile();
-});
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        if (validateFile(selectedFile)) {
+            setFile(selectedFile);
+            previewFile(selectedFile);
+        } else {
+            alert("This is not a PDF File!");
+        }
+    };
 
-dropArea.addEventListener("dragover", (event) => {
-    event.preventDefault();
-    dropArea.classList.add("active");
-    dragText.textContent = "Release to Upload File";
-});
+    const validateFile = (file) => {
+        const validExtensions = ["application/pdf"];
+        return validExtensions.includes(file.type);
+    };
 
-dropArea.addEventListener("dragleave", () => {
-    dropArea.classList.remove("active");
-    dragText.textContent = "Drag & Drop to Upload File";
-});
-
-dropArea.addEventListener("drop", (event) => {
-    event.preventDefault();
-    file = event.dataTransfer.files[0];
-    showFile();
-});
-
-function showFile() {
-    let fileType = file.type;
-    let validExtensions = ["application/pdf"]; // Array of acceptable file types
-    if(validExtensions.includes(fileType)) {
-        let fileReader = new FileReader();
-        fileReader.onload = () => {
-            let fileURL = fileReader.result;
-            // Additional actions can be performed here after the file is read
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            setFileUrl(reader.result);
         };
-        fileReader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+    };
 
-        fileReader.onloadend = function() {
-            // Create a link to the uploaded file
-            const pdfViewer = document.getElementById('pdfViewer');
-        pdfViewer.src = fileReader.result;
-        pdfViewer.style.display = 'block';
-        dropArea.style.display = 'none';
-            
-        };
-    } else {
-        alert("This is not a PDF File!");
-        dropArea.classList.remove("active");
-        dragText.textContent = "Drag & Drop to Upload File";
-    }
-}
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const droppedFile = event.dataTransfer.files[0];
+        if (validateFile(droppedFile)) {
+            setFile(droppedFile);
+            previewFile(droppedFile);
+        } else {
+            alert("This is not a PDF File!");
+        }
+    };
+
+    return (
+        <div className="pdf-uploader">
+            <div className="drag-area" 
+                 onDragOver={handleDragOver}
+                 onDrop={handleDrop}>
+                <header>Drag & Drop to Upload File</header>
+                <button onClick={() => document.getElementById('fileInput').click()}>Upload PDF</button>
+                <input id="fileInput" type="file" onChange={handleFileChange} style={{ display: 'none' }} />
+            </div>
+            {fileUrl && <div className="pdf-viewer">
+                <embed src={fileUrl} type="application/pdf" width="100%" height="400px" />
+            </div>}
+        </div>
+    );
+};
+
+export default PdfUploader;
