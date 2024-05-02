@@ -14,7 +14,7 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 
 const HomePage = () => {
-  const API_KEY = ""
+  const API_KEY = "";
   const systemMessage = { 
     "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
   }
@@ -36,42 +36,66 @@ const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [imageTilesData, setImageTilesData] = useState([]);
   const [showHelloWorld, setShowHelloWorld] = useState(false);
-  const appendMessageToPDF = async (pdfBlob, messageText) => {
+
+  const ChatToPDF = async () => {
+    const response = await fetch(pdfAddress);
+    const blob = await response.blob();
+
+    const updatedPdfBlob = await appendChatToPDF(blob, messages);
+    const pdfUrl = URL.createObjectURL(updatedPdfBlob);
+    setPdfAddress(pdfUrl); // Update the PDF URL to point to the updated PDF
+  };
+
+  const appendChatToPDF = async (pdfBlob, chatMessages) => {
     try {
-      // Load the existing PDF document
-      const existingPdfBytes = await pdfBlob.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const existingPdfBytes = await pdfBlob.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const pages = pdfDoc.getPages();
+        const firstPage = pages[0]; // Assuming you want to add to the first page
   
-      // Embed the Helvetica font
-      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        // Load a standard font
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   
-      // Get the first page of the document
-      const pages = pdfDoc.getPages();
-      const firstPage = pages[0];
+        // Set up text parameters
+        const fontSize = 12;
+        let yOffset = firstPage.getHeight() - 40; // Start writing from the top of the page
   
-      // Calculate where to place the text
-      const { width, height } = firstPage.getSize();
-      const fontSize = 12;
-      const textWidth = helveticaFont.widthOfTextAtSize(messageText, fontSize);
-      const textHeight = helveticaFont.heightAtSize(fontSize);
+        // Add each message to the PDF
+        chatMessages.forEach(message => {
+            const text = `${message.sender}: ${message.message}`;
+            firstPage.drawText(text, {
+                x: 50,
+                y: yOffset,
+                size: fontSize,
+                font: font,
+                color: rgb(0, 0, 0)
+            });
+            yOffset -= 18; // Move down for the next message
+        });
   
-      // Add text to the bottom of the first page
-      firstPage.drawText(messageText, {
-        x: 50,
-        y: 100, // Fixed position for testing
-        size: fontSize,
-        font: helveticaFont,
-        color: rgb(0, 0, 0),
-      });
-  
-      // Serialize the PDF to a blob and return it
-      const pdfBytes = await pdfDoc.save();
-      console.log("PDF modified and saved.");
-      return new Blob([pdfBytes], { type: 'application/pdf' });
+        // Serialize the PDF to a blob and return it
+        const pdfBytes = await pdfDoc.save();
+        return new Blob([pdfBytes], { type: 'application/pdf' });
     } catch (error) {
-      console.error("Failed to append message to PDF:", error);
+        console.error("Failed to append chat to PDF:", error);
     }
   };
+
+
+  const handleSend = async (message) => {
+    const newMessages = [...messages, { message, sender: "user" }];
+    setMessages(newMessages);
+    // Simulate response from ChatGPT (replace this with actual API call)
+    setTimeout(() => {
+      setMessages(prevMessages => [...prevMessages, { message: "This is a simulated response.", sender: "ChatGPT" }]);
+    }, 1000);
+
+      // Continue with the existing processMessageToChatGPT function
+      setIsTyping(true);
+      await processMessageToChatGPT(newMessages);
+    };
+
+
   const uploadUpdatedPDF = async (pdfBlob, fileName) => {
     const formData = new FormData();
     formData.append('file', pdfBlob, fileName);
@@ -93,22 +117,6 @@ const HomePage = () => {
     }
   };
 
-  const handleSend = async (message) => {
-    // If you want to prepend "Please explain: " to the user's message
-  
-    const newMessage = {
-        message: message,
-        direction: 'outgoing',
-        sender: "user",
-    };
-  
-    const newMessages = [...messages, newMessage];
-    setMessages(newMessages);
-  
-    // Continue with the existing processMessageToChatGPT function
-    setIsTyping(true);
-    await processMessageToChatGPT(newMessages);
-  };
   
     async function processMessageToChatGPT(chatMessages) {
       let apiMessages = chatMessages.map((messageObject) => {
@@ -193,8 +201,6 @@ const HomePage = () => {
     setSelectedText(selectedText);
   }
 
-  
-
  
   const handleImageTileClick = (title) => {
     console.log({title})
@@ -205,6 +211,44 @@ const HomePage = () => {
   const handleUploadClick = () => {
     setShowHelloWorld(false);
   };
+
+  const handleSaveChatToPDF = async () => {
+    try {
+      // Create a new PDF document
+      const pdfDoc = await PDFDocument.create();
+  
+      // Add a page to the PDF document
+      const page = pdfDoc.addPage();
+  
+      // Add the chat history as notes to the PDF
+      const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      const notesText = messages.map((message, index) => `${index + 1}. ${message.sender}: ${message.message}`).join('\n');
+      page.drawText(notesText, {
+        x: 50,
+        y: page.getHeight() - 50,
+        font: font,
+        size: 12,
+        color: rgb(0, 0, 0),
+      });
+  
+      // Serialize the PDF
+      const pdfBytes = await pdfDoc.save();
+  
+      // Create a Blob from the PDF bytes
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  
+      // Create a download link for the Blob
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'ChatHistory.pdf';
+  
+      // Click the link to trigger the download
+      link.click();
+    } catch (error) {
+      console.error('Error saving chat history to PDF:', error);
+    }
+  };
+  
 
   if (showHelloWorld) {
     return (
@@ -228,6 +272,7 @@ const HomePage = () => {
               />
             </ChatContainer>
           </MainContainer>
+          <button onClick={handleSaveChatToPDF}>Download Chat History</button>;
         </div>
       </div>
     );
@@ -253,3 +298,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
