@@ -50,3 +50,17 @@ app.use(express.static('public'));
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+const pdfUpload = multer({ storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads'); // Ensure this is the directory where PDFs are stored
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // Use the original file name to overwrite
+    }
+}) });
+
+app.post('/api/upload-pdf', pdfUpload.single('file'), (req, res) => {
+    console.log('Received file:', req.file.originalname);
+    res.json({ message: 'PDF updated successfully' });
+});
