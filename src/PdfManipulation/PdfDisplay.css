@@ -34,5 +34,5 @@
   .pdf-page {
     background-color: white; /* Set background color for each page */
     width: 600px; /* Set width of each page to fill the available space */
-    max-height: 200vh    
+    max-height: 777px    
 }
