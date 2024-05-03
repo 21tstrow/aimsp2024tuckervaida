@@ -38,7 +38,7 @@ const contributors = [
   },
   {
     name: 'Hima Nagi Reddy',
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    description: 'I am a Sophmore in Computer Science. My interests include Machine Learning and Data structures. I like ot listen to music and bake.',
     image: HimaPic
   },
   {

@@ -15,7 +15,7 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 const HomePage = () => {
   const API_KEY = "";
-  const systemMessage = { 
+  const systemMessage = {
     "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
   }
   const [pdfAddress, setPdfAddress] = useState(`${process.env.PUBLIC_URL}/uploads/Paper1.pdf`);
@@ -52,14 +52,14 @@ const HomePage = () => {
         const pdfDoc = await PDFDocument.load(existingPdfBytes);
         const pages = pdfDoc.getPages();
         const firstPage = pages[0]; // Assuming you want to add to the first page
-  
+
         // Load a standard font
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  
+
         // Set up text parameters
         const fontSize = 12;
         let yOffset = firstPage.getHeight() - 40; // Start writing from the top of the page
-  
+
         // Add each message to the PDF
         chatMessages.forEach(message => {
             const text = `${message.sender}: ${message.message}`;
@@ -72,7 +72,7 @@ const HomePage = () => {
             });
             yOffset -= 18; // Move down for the next message
         });
-  
+
         // Serialize the PDF to a blob and return it
         const pdfBytes = await pdfDoc.save();
         return new Blob([pdfBytes], { type: 'application/pdf' });
@@ -99,17 +99,17 @@ const HomePage = () => {
   const uploadUpdatedPDF = async (pdfBlob, fileName) => {
     const formData = new FormData();
     formData.append('file', pdfBlob, fileName);
-  
+
     try {
       const response = await fetch('http://localhost:5001/api/upload-pdf', {
         method: 'POST',
         body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const result = await response.json();
       console.log("Upload successful:", result);
     } catch (error) {
@@ -117,7 +117,7 @@ const HomePage = () => {
     }
   };
 
-  
+
     async function processMessageToChatGPT(chatMessages) {
       let apiMessages = chatMessages.map((messageObject) => {
         let role = "";
@@ -128,7 +128,7 @@ const HomePage = () => {
         }
         return { role: role, content: messageObject.message }
       });
-    
+
       const apiRequestBody = {
         "model": "gpt-3.5-turbo",
         "messages": [
@@ -136,9 +136,9 @@ const HomePage = () => {
           ...apiMessages
         ]
       };
-    
+
       console.log("API Request Body:", apiRequestBody); // Log request body
-    
+
       try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
           method: "POST",
@@ -148,14 +148,14 @@ const HomePage = () => {
           },
           body: JSON.stringify(apiRequestBody)
         });
-    
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    
+
         const data = await response.json();
         console.log("API Response:", data); // Log API response
-    
+
         if (data.choices && data.choices.length > 0) {
           setMessages([...chatMessages, {
             message: data.choices[0].message.content,
@@ -164,7 +164,7 @@ const HomePage = () => {
         } else {
           console.error("No choices found in API response");
         }
-    
+
         setIsTyping(false);
       } catch (error) {
         console.error("Error fetching data:", error.message); // Log fetch error
@@ -201,7 +201,7 @@ const HomePage = () => {
     setSelectedText(selectedText);
   }
 
- 
+
   const handleImageTileClick = (title) => {
     console.log({title})
     setPdfAddress(`${process.env.PUBLIC_URL}/uploads/${title}`);
@@ -216,10 +216,10 @@ const HomePage = () => {
     try {
       // Create a new PDF document
       const pdfDoc = await PDFDocument.create();
-  
+
       // Add a page to the PDF document
       const page = pdfDoc.addPage();
-  
+
       // Add the chat history as notes to the PDF
       const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
       const notesText = messages.map((message, index) => `${index + 1}. ${message.sender}: ${message.message}`).join('\n');
@@ -230,25 +230,25 @@ const HomePage = () => {
         size: 12,
         color: rgb(0, 0, 0),
       });
-  
+
       // Serialize the PDF
       const pdfBytes = await pdfDoc.save();
-  
+
       // Create a Blob from the PDF bytes
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-  
+
       // Create a download link for the Blob
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = 'ChatHistory.pdf';
-  
+
       // Click the link to trigger the download
       link.click();
     } catch (error) {
       console.error('Error saving chat history to PDF:', error);
     }
   };
-  
+
 
   if (showHelloWorld) {
     return (
@@ -290,7 +290,7 @@ const HomePage = () => {
           </div>
         ))}
         <div onClick={handleUploadClick} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <ImageTile title="Upload Files" imageUrl={plusImage} isUploadTile />
+          <a className='biglink' href='/upload'><ImageTile title="Upload Files" imageUrl={plusImage} isUploadTile /></a>
         </div>
       </div>
     </div>
